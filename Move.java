@@ -1,8 +1,59 @@
-class Move {
-	/* *************************************** */
-	// write your code here
+import java.util.ArrayList;
+import java.util.List;
 
-	/* *************************************** */
+class Move {
+	private List<Box> boxes;
+
+    public Move(int capacity) {
+        this.boxes = new ArrayList<>(capacity);
+    }
+
+    public void addBox(Box box) {
+        boxes.add(box);
+    }
+
+    public void print() {
+        System.out.println("The objects of my move are:");
+        for (Box box : boxes) {
+            printContents(box.getContents());
+        }
+    }
+
+	public int find(String objectName) {
+		for (Box box : boxes) {
+			if (boxContainsObject(box, objectName)) {
+				return box.getBoxNumber();
+			}
+		}
+		return -1;
+	}
+	
+	private boolean boxContainsObject(Box box, String objectName) {
+		for (Object item : box.getContents()) {
+			if (item instanceof SingleObject && ((SingleObject) item).getName().equals(objectName)) {
+				return true;
+			} else if (item instanceof Box && boxContainsObject((Box) item, objectName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private void printContents(List<Object> contents) {
+		for (Object item : contents) {
+			if (item instanceof SingleObject) {
+			System.out.print(((SingleObject) item).getName() + "\n");
+			} 
+			else if (item instanceof Box) {
+				List<Object> subContents = ((Box) item).getContents();
+				for (Object subItem : subContents) {
+					if (subItem instanceof SingleObject) {
+						System.out.print(((SingleObject) subItem).getName() + "\n");
+					}
+				}
+			}
+		}
+	}
 
 	public static void main(String[] args) {
 		// We create a move that will hold 2 main boxes

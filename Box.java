@@ -6,7 +6,7 @@ public class Box {
     private int boxNumber;
 
     public Box(int boxCapacity, int boxNumber) {
-        this.contents = new ArrayList<>(boxCapacity);
+        this.contents = new ArrayList<>(boxCapacity);   
         this.boxNumber = boxNumber;
     }
 
